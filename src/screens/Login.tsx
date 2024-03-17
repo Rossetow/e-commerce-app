@@ -8,6 +8,8 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  console.log(login)
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>LOGIN</Text>
@@ -17,6 +19,7 @@ const Login = () => {
         onChangeText={setUsername}
         autoCapitalize="none"
         placeholder="Insira seu usuário"
+        placeholderTextColor="#ebebeb"
       />
       <TextInput
         style={styles.input}
@@ -24,6 +27,7 @@ const Login = () => {
         onChangeText={setPassword}
         secureTextEntry
         placeholder="Insira sua senha"
+        placeholderTextColor="#ebebeb"
       />
 
       <TouchableOpacity
@@ -41,19 +45,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 10,
+    backgroundColor: "#221f3b"
   },
   input: {
     width: "100%",
     height: 50,
     marginVertical: 12,
     borderWidth: 1,
+    borderColor:"#ebebeb",
     padding: 10,
+    color: "#ebebeb"
   },
   button: {
     width: "100%",
     height: 50,
-    backgroundColor: "#606060",
+    backgroundColor: "#283654",
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 12,
@@ -62,7 +68,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   title: {
-    color: "#252525",
+    color: "#ebebeb",
     fontSize: 26,
     fontWeight: "bold",
   },

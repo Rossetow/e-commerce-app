@@ -7,6 +7,8 @@ import Payment from "../screens/Payment";
 import MenuHeader from "../components/MenuHeader";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import User from "../screens/User";
+import { StyleSheet } from "react-native";
+import Login from "../screens/Login";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +21,10 @@ export const HomeRoutes = () => {
         options={{
           headerTitle: "Lista de Produtos",
           headerRight: () => <MenuHeader />,
+          headerStyle: {
+            backgroundColor: "#6f4a8e"
+          },
+          headerTintColor: "#ebebeb"
         }}
       />
       <Stack.Screen
@@ -27,6 +33,10 @@ export const HomeRoutes = () => {
         options={{
           headerTitle: "Detalhes",
           headerRight: () => <MenuHeader />,
+          headerStyle: {
+            backgroundColor: "#6f4a8e"
+          },
+          headerTintColor: "#ebebeb"
         }}
       />
       <Stack.Screen
@@ -34,16 +44,32 @@ export const HomeRoutes = () => {
         component={Cart}
         options={{
           headerTitle: "Carrinho",
+          headerStyle: {
+            backgroundColor: "#6f4a8e"
+          },
+          headerTintColor: "#ebebeb"
         }}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Payment"
         component={Payment}
         options={{
           headerTitle: "Pagamento",
           headerRight: () => <MenuHeader />,
+          headerStyle: {
+            backgroundColor: "#6f4a8e"
+          },
+          headerTintColor: "#ebebeb"
         }}
-      /> */}
+      />
+      <Stack.Screen
+        name="User"
+        component={User}
+      />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        />
     </Stack.Navigator>
   );
 };
@@ -56,6 +82,8 @@ export const AppRoutes = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
+        tabBarActiveBackgroundColor: "#6f4a8e",
+        tabBarInactiveBackgroundColor: "#6f4a8e"
       }}
     >
       <Tab.Screen
@@ -63,7 +91,7 @@ export const AppRoutes = () => {
         component={HomeRoutes}
         options={{
           tabBarIcon: () => (
-            <MaterialIcons name="home" size={30} color="#4169E1" />
+            <MaterialIcons name="home" size={30} color="#ebebeb" />
           ),
         }}
       />
@@ -72,20 +100,19 @@ export const AppRoutes = () => {
         component={User}
         options={{
           tabBarIcon: () => (
-            <MaterialIcons name="person" size={30} color="#4169E1" />
+            <MaterialIcons name="person" size={30} color="#ebebeb" />
           ),
+          tabBarStyle: {
+            backgroundColor: "#ebebeb"
+          }
         }}
       />
-      <Tab.Screen
-        name="Payment"
-        component={Payment}
-        options={{
-          tabBarIcon: () => (
-            <MaterialIcons name="person" size={50} color="#4169E1" />
-          ),
-        }}
-      />
-
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  header: {
+    backgroundColor: "#6f4a8e"
+  }
+})

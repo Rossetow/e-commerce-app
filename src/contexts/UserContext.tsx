@@ -131,6 +131,7 @@ export const UserContextProvider = ({ children }: UserProviderProps) => {
     await AsyncStorage.removeItem("@user");
     setToken("");
     await AsyncStorage.removeItem("@cart");
+    
   };
 
   return (

@@ -2,13 +2,13 @@ import { ReactNode, createContext, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ICartItem, ProductDTO } from "../types/Products";
 import Toast from "react-native-root-toast";
-import { executeNativeBackPress } from "react-native-screens";
 
 type CartContextProps = {
   cart: ICartItem[];
   getCart: () => void;
   addProduct: (product: ProductDTO) => void;
   removeProduct: (id: number) => void;
+  clearCart: () => void;
 };
 
 type CartProviderProps = {
@@ -42,7 +42,7 @@ export const CartContextProvider = ({ children }: CartProviderProps) => {
   const getCart = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem("@cart");
-      const cartData = jsonValue !== null ? JSON.parse(jsonValue) : null;
+      const cartData = jsonValue !== null ? JSON.parse(jsonValue) : [];
       setCart(cartData);
     } catch (error) {
       Toast.show("Não foi possível recuperar o carrinho", {
@@ -56,6 +56,7 @@ export const CartContextProvider = ({ children }: CartProviderProps) => {
       });
     }
   };
+  
 
   const addProduct = (value: ProductDTO) => {
     const existingProduct = cart.find(({ product }) => value.id === product.id);
@@ -76,12 +77,36 @@ export const CartContextProvider = ({ children }: CartProviderProps) => {
       setCart(newCart);
       storeCart(newCart);
     }
+    console.log(cart)
   };
 
-  const removeProduct = () => {};
+  const removeProduct = (id: number) => {
+    const produtoExisteId = cart.findIndex(({ product }) => id === product.id);
+  
+    if (produtoExisteId !== -1) {
+      const carrinhoAtualizado = [...cart];
+      const produtoExistente = carrinhoAtualizado[produtoExisteId];
+      
+      if (produtoExistente.quantity > 1) {
+     
+        carrinhoAtualizado[produtoExisteId] = { ...produtoExistente, quantity: produtoExistente.quantity - 1 };
+      } else {
+        carrinhoAtualizado.splice(produtoExisteId, 1);
+      }
+  
+      setCart(carrinhoAtualizado);
+      storeCart(carrinhoAtualizado);
+    } 
+  };
+
+  const clearCart = () => {
+    console.log("oi")
+    setCart([])
+    AsyncStorage.setItem("@cart", "")
+  }
 
   return (
-    <CartContext.Provider value={{ cart, getCart, addProduct, removeProduct }}>
+    <CartContext.Provider value={{ cart, getCart, addProduct, removeProduct, clearCart }}>
       {children}
     </CartContext.Provider>
   );
